@@ -27,6 +27,7 @@ class PanasonicACCNT : public PanasonicAC {
   void on_eco_change(bool eco) override;
   void on_econavi_change(bool eco) override;
   void on_mild_dry_change(bool mild_dry) override;
+  void on_alternative_mild_dry_change(bool alternative_mild_dry) override;
 
   void setup() override;
   void loop() override;
@@ -60,6 +61,7 @@ class PanasonicACCNT : public PanasonicAC {
   bool determine_eco(uint8_t value);
   bool determine_econavi(uint8_t value);
   bool determine_mild_dry(uint8_t value);
+  bool determine_alternative_mild_dry(uint8_t value);
   uint16_t determine_power_consumption(uint8_t byte_28, uint8_t multiplier, uint8_t offset);
 };
 
