@@ -2,6 +2,8 @@
 
 An open source alternative for the Panasonic wi-fi adapter that works locally without the cloud.
 
+Forked to use an alternative Mild Dry Switch, because my CS-Z25TKEW A/C seems to use another Byte for this.
+
 # Features
 
 * Control your AC locally via Home Assistant, MQTT or directly
