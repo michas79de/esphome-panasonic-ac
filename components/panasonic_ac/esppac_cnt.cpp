@@ -485,7 +485,7 @@ bool PanasonicACCNT::determine_alternative_mild_dry(uint8_t value) {
   else if (value == 0x32)
     return false;
   else {
-    ESP_LOGW(TAG, "Received unknown mild dry value");
+    ESP_LOGW(TAG, "Received unknown alternative mild dry value: %d", value);
     return false;
   }
 }
