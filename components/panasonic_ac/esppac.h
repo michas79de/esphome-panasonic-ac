@@ -39,6 +39,7 @@ class PanasonicAC : public Component, public uart::UARTDevice, public climate::C
   void set_eco_switch(switch_::Switch *eco_switch);
   void set_econavi_switch(switch_::Switch *econavi_switch);
   void set_mild_dry_switch(switch_::Switch *mild_dry_switch);
+  void set_alternative_mild_dry_switch(switch_::Switch *alternative_mild_dry_switch);
   void set_current_power_consumption_sensor(sensor::Sensor *current_power_consumption_sensor);
 
   void set_current_temperature_sensor(sensor::Sensor *current_temperature_sensor);
@@ -54,6 +55,7 @@ class PanasonicAC : public Component, public uart::UARTDevice, public climate::C
   switch_::Switch *eco_switch_ = nullptr;                       // Switch to toggle eco mode on/off
   switch_::Switch *econavi_switch_ = nullptr;                   // Switch to toggle econavi mode on/off
   switch_::Switch *mild_dry_switch_ = nullptr;                  // Switch to toggle mild dry mode on/off
+  switch_::Switch *alternative_mild_dry_switch_ = nullptr;      // Switch to toggle alternative mild dry mode on/off
   sensor::Sensor *current_temperature_sensor_ = nullptr;        // Sensor to use for current temperature where AC does not report
   sensor::Sensor *current_power_consumption_sensor_ = nullptr;  // Sensor to store current power consumption from queries
 
@@ -64,6 +66,7 @@ class PanasonicAC : public Component, public uart::UARTDevice, public climate::C
   bool eco_state_ = false;       // Stores the state of eco to prevent duplicate packets
   bool econavi_state_ = false;       // Stores the state of econavi to prevent duplicate packets
   bool mild_dry_state_ = false;  // Stores the state of mild dry to prevent duplicate packets
+  bool alternative_mild_dry_state_ = false;  // Stores the state of alternative mild dry to prevent duplicate packets
 
   bool waiting_for_response_ = false;  // Set to true if we are waiting for a response
 
@@ -90,6 +93,7 @@ class PanasonicAC : public Component, public uart::UARTDevice, public climate::C
   void update_eco(bool eco);
   void update_econavi(bool econavi);
   void update_mild_dry(bool mild_dry);
+  void update_alternative_mild_dry(bool alternative_mild_dry);
   void update_current_power_consumption(int16_t power);
 
   virtual void on_horizontal_swing_change(const std::string &swing) = 0;
@@ -98,6 +102,7 @@ class PanasonicAC : public Component, public uart::UARTDevice, public climate::C
   virtual void on_eco_change(bool eco) = 0;
   virtual void on_econavi_change(bool econavi) = 0;
   virtual void on_mild_dry_change(bool mild_dry) = 0;
+  virtual void on_alternative_mild_dry_change(bool alternative_mild_dry) = 0;
 
   climate::ClimateAction determine_action();
 
