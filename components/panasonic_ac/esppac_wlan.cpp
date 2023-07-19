@@ -850,6 +850,24 @@ void PanasonicACWLAN::on_mild_dry_change(bool state) {
 
   // send_set_command();
 }
+void PanasonicACWLAN::on_alternative_mild_dry_change(bool state) {
+  if (this->state_ != ACState::Ready)
+    return;
+
+  return;
+
+  // TODO: implement alternative_mild_dry
+
+  // if (state) {
+  //   ESP_LOGV(TAG, "Turning alternative_mild_dry on");
+  //   set_value(..., ...);  // alternative_mild_dry on
+  // } else {
+  //   ESP_LOGV(TAG, "Turning alternative_mild_dry off");
+  //   set_value(..., ...);  // alternative_mild_dry off
+  // }
+
+  // send_set_command();
+}
 
 }  // namespace WLAN
 }  // namespace panasonic_ac
