@@ -161,6 +161,7 @@ void PanasonicACCNT::set_data(bool set) {
   bool eco = determine_eco(this->data[8]);
   bool econavi = determine_econavi(this->data[5]);
   bool mildDry = determine_mild_dry(this->data[2]);
+  bool alternativeMildDry = determine_alternative_mild_dry(this->data[11]);
   
   this->update_target_temperature((int8_t) this->data[1]);
 
@@ -210,6 +211,7 @@ void PanasonicACCNT::set_data(bool set) {
   this->update_eco(eco);
   this->update_econavi(econavi);
   this->update_mild_dry(mildDry);
+  this->update_alternative_mild_dry(alternativeMildDry);
 }
 
 /*
@@ -477,6 +479,16 @@ bool PanasonicACCNT::determine_mild_dry(uint8_t value) {
     return false;
   }
 }
+bool PanasonicACCNT::determine_alternative_mild_dry(uint8_t value) {
+  if (value == 0x2B)
+    return true;
+  else if (value == 0x2D)
+    return false;
+  else {
+    ESP_LOGW(TAG, "Received unknown mild dry value");
+    return false;
+  }
+}
 
 uint16_t PanasonicACCNT::determine_power_consumption(uint8_t byte_28, uint8_t byte_29, uint8_t offset) {
   return (uint16_t)(byte_28 + (byte_29 * 256)) - offset;
@@ -626,6 +638,26 @@ void PanasonicACCNT::on_mild_dry_change(bool state) {
   } else {
     ESP_LOGV(TAG, "Turning mild dry off");
     this->cmd[2] = 0x80;
+  }
+
+}
+void PanasonicACCNT::on_alternative_mild_dry_change(bool state) {
+  if (this->state_ != ACState::Ready)
+    return;
+
+  if (this->cmd.empty()) {
+    ESP_LOGV(TAG, "Copying data to cmd");
+    this->cmd = this->data;
+  }
+
+  this->alternative_mild_dry_state_ = state;
+
+  if (state) {
+    ESP_LOGV(TAG, "Turning mild dry on");
+    this->cmd[11] = 0x2B;
+  } else {
+    ESP_LOGV(TAG, "Turning mild dry off");
+    this->cmd[11] = 0x2D;
   }
 
 }
