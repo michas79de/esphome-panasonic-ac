@@ -134,6 +134,12 @@ void PanasonicAC::update_mild_dry(bool mild_dry) {
     this->mild_dry_switch_->publish_state(this->mild_dry_state_);
   }
 }
+void PanasonicAC::update_alternative_mild_dry(bool alternative_mild_dry) {
+  if (this->alternative_mild_dry_switch_ != nullptr) {
+    this->alternative_mild_dry_state_ = alternative_mild_dry;
+    this->alternative_mild_dry_switch_->publish_state(this->alternative_mild_dry_state_);
+  }
+}
 
 climate::ClimateAction PanasonicAC::determine_action() {
   if (this->mode == climate::CLIMATE_MODE_OFF) {
@@ -229,6 +235,14 @@ void PanasonicAC::set_mild_dry_switch(switch_::Switch *mild_dry_switch) {
     if (state == this->mild_dry_state_)
       return;
     this->on_mild_dry_change(state);
+  });
+}
+void PanasonicAC::set_alternative_mild_dry_switch(switch_::Switch *alternative_mild_dry_switch) {
+  this->alternative_mild_dry_switch_ = alternative_mild_dry_switch;
+  this->alternative_mild_dry_switch_->add_on_state_callback([this](bool state) {
+    if (state == this->alternative_mild_dry_state_)
+      return;
+    this->on_alternative_mild_dry_change(state);
   });
 }
 
