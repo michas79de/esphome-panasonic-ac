@@ -480,9 +480,9 @@ bool PanasonicACCNT::determine_mild_dry(uint8_t value) {
   }
 }
 bool PanasonicACCNT::determine_alternative_mild_dry(uint8_t value) {
-  if (value == 0x2B)
+  if (value == 0x30)
     return true;
-  else if (value == 0x2D)
+  else if (value == 0x32)
     return false;
   else {
     ESP_LOGW(TAG, "Received unknown mild dry value");
@@ -654,10 +654,10 @@ void PanasonicACCNT::on_alternative_mild_dry_change(bool state) {
 
   if (state) {
     ESP_LOGV(TAG, "Turning mild dry on");
-    this->cmd[11] = 0x2B;
+    this->cmd[11] = 0x30;
   } else {
     ESP_LOGV(TAG, "Turning mild dry off");
-    this->cmd[11] = 0x2D;
+    this->cmd[11] = 0x32;
   }
 
 }
