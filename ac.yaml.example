@@ -52,6 +52,8 @@ climate:
     #   name: Panasonic AC NanoeX Switch
     # mild_dry_switch:
     #   name: Panasonic AC Mild Dry Switch
+    # alternative_mild_dry_switch:
+    #   name: Panasonic AC Alternative Mild Dry Switch
     # current_power_consumption:
     #   name: Panasonic AC Power Consumption
 
