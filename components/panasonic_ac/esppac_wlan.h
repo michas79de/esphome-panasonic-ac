@@ -34,6 +34,7 @@ class PanasonicACWLAN : public PanasonicAC {
   void on_eco_change(bool eco) override;
   void on_econavi_change(bool eco) override;
   void on_mild_dry_change(bool mild_dry) override;
+  void on_alternative_mild_dry_change(bool alternative_mild_dry) override;
 
   void setup() override;
   void loop() override;
